@@ -4,6 +4,7 @@ from pydantic import BaseModel
 import os
 import json
 import tempfile
+import re
 from app.services.ai_service import upload_document_to_gemini, get_game_state
 from dotenv import load_dotenv
 
@@ -14,7 +15,8 @@ app = FastAPI(title="NorthForge Forge-Sim API")
 # Setup CORS with a whitelist
 origins = [
     "http://localhost:5173", # Frontend dev server
-    # TODO: Add production domain here when ready
+    "https://northforgestudios.tech",
+    "https://www.northforgestudios.tech"
 ]
 
 app.add_middleware(
@@ -30,6 +32,13 @@ class GameActionRequest(BaseModel):
     user_action: str
     current_hp: int
     current_xp: int
+
+def clean_json_response(raw_str: str) -> str:
+    cleaned = raw_str.strip()
+    if cleaned.startswith("```"):
+        cleaned = re.sub(r"^```[a-zA-Z]*\n?", "", cleaned)
+        cleaned = re.sub(r"\n?```$", "", cleaned)
+    return cleaned.strip()
 
 @app.post("/api/upload")
 async def upload_pdf(file: UploadFile = File(...)):
@@ -50,7 +59,8 @@ async def upload_pdf(file: UploadFile = File(...)):
 
         # Parse the JSON response
         try:
-            initial_state = json.loads(initial_state_str)
+            cleaned_state_str = clean_json_response(initial_state_str)
+            initial_state = json.loads(cleaned_state_str)
         except json.JSONDecodeError:
             print("Failed to parse JSON:", initial_state_str)
             raise HTTPException(status_code=500, detail="Respuesta invalida del Game Master")
@@ -78,7 +88,8 @@ async def game_action(request: GameActionRequest):
         )
 
         try:
-            state = json.loads(state_str)
+            cleaned_state_str = clean_json_response(state_str)
+            state = json.loads(cleaned_state_str)
         except json.JSONDecodeError:
             print("Failed to parse JSON:", state_str)
             raise HTTPException(status_code=500, detail="Respuesta invalida del Game Master")
