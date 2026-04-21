@@ -1,4 +1,5 @@
-import { Bot, MessageSquare, Workflow } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Bot, MessageSquare, Workflow, Terminal } from 'lucide-react';
 
 const Home = () => {
   return (
@@ -69,6 +70,47 @@ const Home = () => {
                 </li>
               </ul>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Labs Section */}
+      <section className="py-32 bg-slate-900 relative border-t border-slate-800">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">NorthForge Labs</h2>
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+              Experimenta con nuestras pruebas de concepto y simuladores técnicos.
+            </p>
+          </div>
+
+          <div className="flex justify-center">
+            <Link
+              to="/labs/forge-sim"
+              className="group relative block w-full max-w-2xl bg-black border-2 border-green-500/30 p-8 hover:border-green-400 transition-all duration-300 overflow-hidden"
+            >
+              {/* Glitch Effect Background */}
+              <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTTAgNDBoNDBWMEgwem0zOS0zOXYzOEgyVjFoMzd6IiBmaWxsPSJyZ2JhKDM0LCAxOTcsIDk0LCAwLjA1KSIgZmlsbC1ydWxlPSJldmVub2RkIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20 group-hover:opacity-40 transition-opacity"></div>
+
+              <div className="relative z-10 flex flex-col md:flex-row items-center gap-6">
+                <div className="w-16 h-16 shrink-0 bg-green-950 border border-green-500 flex items-center justify-center text-green-500 shadow-[0_0_15px_rgba(34,197,94,0.3)] group-hover:shadow-[0_0_25px_rgba(34,197,94,0.6)] transition-all">
+                  <Terminal className="w-8 h-8" />
+                </div>
+
+                <div className="text-center md:text-left">
+                  <h3 className="text-2xl font-bold text-green-400 tracking-wider uppercase mb-2 group-hover:animate-pulse">
+                    PROYECTO: FORGE-SIM
+                  </h3>
+                  <p className="text-green-500/70 font-mono text-sm">
+                    Simulador de supervivencia técnica basado en IA. Sube tu material, enfréntate a la terminal y prueba tus conocimientos.
+                  </p>
+                </div>
+
+                <div className="md:ml-auto shrink-0 px-4 py-2 bg-green-500 text-black font-bold text-sm uppercase tracking-widest group-hover:bg-green-400 transition-colors">
+                  Iniciar
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </section>
