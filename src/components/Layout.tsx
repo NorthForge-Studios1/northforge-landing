@@ -3,7 +3,14 @@ import { Outlet, Link } from 'react-router-dom';
 const Layout = () => {
   return (
     <div className="min-h-screen bg-slate-900 text-slate-50 flex flex-col font-sans selection:bg-brand-purple selection:text-white">
-      <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+      {/* Cyberpunk Banner */}
+      <div className="sticky top-0 z-[60] w-full bg-[#fde047] text-black text-center py-1 font-bold tracking-[0.2em] text-xs sm:text-sm uppercase shadow-[0_0_10px_rgba(253,224,71,0.5)] border-b-2 border-black flex items-center justify-center gap-4">
+        <span>⚠️</span>
+        <span className="animate-pulse">BETA // EN PRUEBAS</span>
+        <span>⚠️</span>
+      </div>
+
+      <header className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-[28px] sm:top-[32px] z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/" className="text-2xl font-bold tracking-tighter flex items-center gap-2 group">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-blue to-brand-purple flex items-center justify-center shadow-lg group-hover:shadow-brand-purple/20 transition-all duration-300">
