@@ -31,7 +31,7 @@ class GameActionRequest(BaseModel):
     current_hp: int
     current_xp: int
 
-@app.post("/api/upload")
+@app.post("/upload")
 async def upload_pdf(file: UploadFile = File(...)):
     if file.content_type != "application/pdf":
         raise HTTPException(status_code=400, detail="El archivo debe ser un PDF")
@@ -67,7 +67,7 @@ async def upload_pdf(file: UploadFile = File(...)):
         if 'tmp_file_path' in locals() and os.path.exists(tmp_file_path):
             os.remove(tmp_file_path)
 
-@app.post("/api/game_action")
+@app.post("/game_action")
 async def game_action(request: GameActionRequest):
     try:
         state_str = get_game_state(

@@ -61,7 +61,7 @@ const LabsForgeSim = () => {
 
     try {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-      const response = await axios.post(`${apiUrl}/api/upload`, formData, {
+      const response = await axios.post(`${apiUrl}/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -94,7 +94,7 @@ const LabsForgeSim = () => {
 
     try {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-      const response = await axios.post(`${apiUrl}/api/game_action`, {
+      const response = await axios.post(`${apiUrl}/game_action`, {
         document_uri: documentUri,
         user_action: `Opción ${optionLetter}`,
         current_hp: gameState.hp_actual,
