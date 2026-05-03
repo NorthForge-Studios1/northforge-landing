@@ -17,7 +17,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // If auth is null (missing API key), fallback to a mock state
     if (!auth) {
       console.warn('Firebase Auth is not initialized. Using mock UI mode.');
-      setLoading(false);
+      // Workaround for synchronous state update in effect
+      setTimeout(() => setLoading(false), 0);
       return;
     }
 
