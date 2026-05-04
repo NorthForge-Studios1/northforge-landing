@@ -1,72 +1,90 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useModal } from '../../context/ModalContext';
+
+const NAV_LINKS = [
+  { label: 'Featured', href: '#featured' },
+  { label: 'Our Products', href: '#products' },
+  { label: 'Publish With Us', href: '#publish' },
+  { label: 'About', href: '#about' },
+];
 
 export const Header: React.FC = () => {
-  const { user, loading, loginWithGoogle, logout } = useAuth();
-  const navigate = useNavigate();
+  const [scrolled, setScrolled] = useState(false);
+  const { openContact } = useModal();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-black/80 backdrop-blur-md">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center space-x-6">
-          <Link to="/" className="text-xl font-bold text-white tracking-tighter">
-            <span className="text-blue-500">NORTH</span>FORGE
-          </Link>
-          <nav className="hidden md:flex space-x-4">
-            <Link to="/projects" className="text-sm text-gray-300 hover:text-white transition-colors">
-              Projects
-            </Link>
-            <Link to="/labs" className="text-sm text-gray-300 hover:text-white transition-colors">
-              Labs
-            </Link>
-          </nav>
-        </div>
+    <nav
+      style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0 40px', height: 64,
+        background: scrolled ? 'rgba(8,11,18,0.78)' : 'rgba(8,11,18,0.0)',
+        backdropFilter: scrolled ? 'blur(20px)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(103,232,249,0.08)' : '1px solid transparent',
+        transition: 'all 0.3s',
+      }}
+    >
+      <Link
+        to="/"
+        style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}
+      >
+        <img src="/logo.svg" alt="NorthForge" style={{ width: 28, height: 28 }} />
+        <span style={{
+          fontFamily: "'Space Grotesk', sans-serif",
+          fontSize: 15, fontWeight: 600, letterSpacing: '-0.02em', color: '#f0f4ff',
+        }}>
+          NorthForge<span style={{ color: '#67e8f9' }}>Studios</span>
+        </span>
+      </Link>
 
-        <div className="flex items-center space-x-4">
-          {loading ? (
-            <div className="w-8 h-8 rounded-full border-2 border-blue-500 border-t-transparent animate-spin" />
-          ) : user ? (
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => navigate('/dashboard')}
-                className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
-              >
-                Dashboard
-              </button>
-              <div className="relative group">
-                <img
-                  src={user.photoURL || `https://ui-avatars.com/api/?name=${user.email}`}
-                  alt="Profile"
-                  className="w-8 h-8 rounded-full cursor-pointer border border-gray-700 hover:border-gray-500 transition-colors"
-                />
-                <div className="absolute right-0 mt-2 w-48 py-2 bg-gray-900 rounded-lg shadow-xl border border-gray-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                  <div className="px-4 py-2 border-b border-gray-800">
-                    <p className="text-sm text-white truncate">{user.displayName || user.email}</p>
-                    <p className="text-xs text-gray-500 capitalize">{user.role}</p>
-                  </div>
-                  <button
-                    onClick={logout}
-                    className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-800 transition-colors"
-                  >
-                    Sign out
-                  </button>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={loginWithGoogle}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+      <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
+          {NAV_LINKS.map(({ label, href }) => (
+            <a
+              key={label}
+              href={href}
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase',
+                color: '#6b7280', textDecoration: 'none', transition: 'color 0.2s',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.color = '#a5f3fc')}
+              onMouseLeave={e => (e.currentTarget.style.color = '#6b7280')}
             >
-              Sign In
-            </motion.button>
-          )}
+              {label}
+            </a>
+          ))}
         </div>
+        <button
+          onClick={openContact}
+          style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase',
+            padding: '8px 18px', borderRadius: 6,
+            background: 'rgba(103,232,249,0.08)',
+            border: '1px solid rgba(103,232,249,0.25)',
+            color: '#67e8f9', cursor: 'pointer', transition: 'all 0.2s',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = 'rgba(103,232,249,0.16)';
+            e.currentTarget.style.borderColor = 'rgba(103,232,249,0.45)';
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = 'rgba(103,232,249,0.08)';
+            e.currentTarget.style.borderColor = 'rgba(103,232,249,0.25)';
+          }}
+        >
+          Contact
+        </button>
       </div>
-    </header>
+    </nav>
   );
 };

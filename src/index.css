@@ -1,18 +1,77 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-blue: #0ea5e9;
+  --color-brand-blue: #3b82f6;
+  --color-brand-cyan: #67e8f9;
   --color-brand-purple: #8b5cf6;
 }
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Space Grotesk', Inter, system-ui, sans-serif;
   color-scheme: dark;
 }
 
 body {
   margin: 0;
-  background-color: #0f172a;
-  color: #f8fafc;
+  background-color: #080b12;
+  color: #f0f4ff;
   min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient grid */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(103,232,249,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(103,232,249,0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+}
+
+/* Ambient color field */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 60% at 80% 0%, rgba(103,232,249,0.08), transparent 60%),
+    radial-gradient(ellipse 50% 50% at 0% 100%, rgba(59,130,246,0.06), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes nf-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.6); }
+}
+@keyframes nf-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes nf-fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes nf-modalin {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+.nf-pulse { animation: nf-pulse 2s ease-in-out infinite; }
+.nf-float { animation: nf-float 7s ease-in-out infinite; }
+.nf-fadein { animation: nf-fadein 0.2s ease; }
+.nf-modalin { animation: nf-modalin 0.25s ease; }
+
+input::placeholder, textarea::placeholder { color: #475569; }
+
+::selection {
+  background: rgba(103,232,249,0.25);
+  color: #f0f4ff;
 }
