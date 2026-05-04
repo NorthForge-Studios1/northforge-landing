@@ -1,4 +1,5 @@
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Depends, Security
+from fastapi.security.api_key import APIKeyHeader
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import os
@@ -26,6 +27,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+api_key_header = APIKeyHeader(name="X-API-Key", auto_error=True)
+
+def get_api_key(api_key_header: str = Security(api_key_header)):
+    expected_api_key = os.getenv("BACKEND_SECRET_KEY", "default_secret_if_not_set")
+    if api_key_header == expected_api_key:
+        return api_key_header
+    raise HTTPException(status_code=403, detail="No tienes permisos para acceder a este recurso")
+
 class GameActionRequest(BaseModel):
     document_uri: str
     user_action: str
@@ -33,7 +42,7 @@ class GameActionRequest(BaseModel):
     current_xp: int
 
 @app.post("/api/upload")
-async def upload_pdf(file: UploadFile = File(...)):
+async def upload_pdf(file: UploadFile = File(...), api_key: str = Depends(get_api_key)):
     if file.content_type != "application/pdf":
         raise HTTPException(status_code=400, detail="El archivo debe ser un PDF")
 
@@ -69,7 +78,7 @@ async def upload_pdf(file: UploadFile = File(...)):
             os.remove(tmp_file_path)
 
 @app.post("/api/game_action")
-async def game_action(request: GameActionRequest):
+async def game_action(request: GameActionRequest, api_key: str = Depends(get_api_key)):
     try:
         state_str = get_game_state(
             request.document_uri,
