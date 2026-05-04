@@ -6,6 +6,8 @@ import { PublishSection } from '../components/landing/PublishSection';
 import { AboutSection } from '../components/landing/AboutSection';
 
 const Home: React.FC = () => {
+  console.log("Welcome to NorthForge Landing!");
+  
   return (
     <div style={{ position: 'relative' }}>
       <HeroSection />
