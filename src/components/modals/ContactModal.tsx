@@ -67,7 +67,7 @@ export const ContactModal: React.FC<Props> = ({ open, onClose }) => {
         >✕</button>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-          <img src="/logo.svg" alt="NorthForge" style={{ width: 26, height: 26 }} />
+          <img src="/logo-mark.png" alt="NorthForge" style={{ width: 26, height: 26 }} />
           <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.16em', color: '#67e8f9', textTransform: 'uppercase' }}>
             Contact
           </span>

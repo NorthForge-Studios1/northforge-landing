@@ -1,5 +1,6 @@
 import React from 'react';
-import { PRODUCTS, OwnProduct } from '../../data/nf-constants';
+import { PRODUCTS } from '../../data/nf-constants';
+import type { OwnProduct } from '../../data/nf-constants';
 
 const ArrowIcon = () => (
   <svg width={12} height={12} viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">

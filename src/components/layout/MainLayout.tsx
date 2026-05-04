@@ -44,7 +44,7 @@ export const MainLayout: React.FC = () => {
           flexWrap: 'wrap', gap: 18,
         }}>
           <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-            <img src="/logo.svg" alt="NorthForge" style={{ width: 22, height: 22 }} />
+            <img src="/logo-mark.png" alt="NorthForge" style={{ width: 22, height: 22 }} />
             <span style={{
               fontFamily: "'Space Grotesk', sans-serif",
               fontSize: 14, fontWeight: 600, letterSpacing: '-0.02em', color: '#f0f4ff',

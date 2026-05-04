@@ -131,7 +131,7 @@ export const HeroSection: React.FC = () => {
           filter: 'blur(30px)',
         }} />
         <img
-          src="/logo.svg"
+          src="/logo-mark.png"
           alt="NorthForge"
           className="nf-float"
           style={{

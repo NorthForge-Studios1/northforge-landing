@@ -1,5 +1,6 @@
 import React from 'react';
-import { FEATURED, FeaturedProduct } from '../../data/nf-constants';
+import { FEATURED } from '../../data/nf-constants';
+import type { FeaturedProduct } from '../../data/nf-constants';
 import { useModal } from '../../context/ModalContext';
 
 const ArrowIcon = () => (

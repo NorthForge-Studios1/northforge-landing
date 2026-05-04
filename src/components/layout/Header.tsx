@@ -36,7 +36,7 @@ export const Header: React.FC = () => {
         to="/"
         style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}
       >
-        <img src="/logo.svg" alt="NorthForge" style={{ width: 28, height: 28 }} />
+        <img src="/logo-mark.png" alt="NorthForge" style={{ width: 28, height: 28 }} />
         <span style={{
           fontFamily: "'Space Grotesk', sans-serif",
           fontSize: 15, fontWeight: 600, letterSpacing: '-0.02em', color: '#f0f4ff',
