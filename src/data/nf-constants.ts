@@ -1,4 +1,4 @@
-export const CONTACT_EMAIL = 'deidev180@gmail.com';
+export const CONTACT_EMAIL = 'contacto@northforgestudios.tech';
 export const X_URL = 'https://x.com/NorthForgeOrg';
 export const GITHUB_URL = 'https://github.com/North-Chive';
 
@@ -73,11 +73,13 @@ export const TEAM = [
     name: 'Daniel Yadir Perea',
     role: 'CEO · Technical Director',
     accent: '#67e8f9',
+    xUrl: 'https://x.com/Danielceon0rth',
   },
   {
     initials: 'DT',
     name: 'Deiner David Trelles',
     role: 'COO · Operations & Community',
     accent: '#3b82f6',
+    xUrl: 'https://x.com/Dei_KiMi',
   },
 ];

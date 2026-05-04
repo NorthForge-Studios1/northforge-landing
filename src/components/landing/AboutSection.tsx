@@ -47,15 +47,29 @@ export const AboutSection: React.FC = () => {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-          {TEAM.map(({ initials, name, role, accent }) => (
-            <div
+          {TEAM.map(({ initials, name, role, accent, xUrl }) => (
+            <a
               key={name}
+              href={xUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 display: 'flex', alignItems: 'center', gap: 18,
                 padding: '20px 24px',
                 background: 'rgba(255,255,255,0.015)',
                 border: '1px solid rgba(103,232,249,0.08)',
                 borderRadius: 10,
+                textDecoration: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = `${accent}0d`;
+                e.currentTarget.style.borderColor = `${accent}40`;
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = 'rgba(255,255,255,0.015)';
+                e.currentTarget.style.borderColor = 'rgba(103,232,249,0.08)';
               }}
             >
               <div style={{
@@ -66,7 +80,7 @@ export const AboutSection: React.FC = () => {
                 fontFamily: "'JetBrains Mono', monospace",
                 fontSize: 12, fontWeight: 600, color: accent, flexShrink: 0,
               }}>{initials}</div>
-              <div>
+              <div style={{ flexGrow: 1 }}>
                 <div style={{
                   fontFamily: "'Space Grotesk', sans-serif", fontSize: 15,
                   fontWeight: 600, color: '#e2e8f0',
@@ -76,7 +90,10 @@ export const AboutSection: React.FC = () => {
                   letterSpacing: '0.08em', color: '#64748b', marginTop: 3,
                 }}>{role}</div>
               </div>
-            </div>
+              <svg width={14} height={14} viewBox="0 0 24 24" fill={accent} style={{ opacity: 0.5, flexShrink: 0 }}>
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.727-8.85L1.254 2.25H8.08l4.213 5.567zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+            </a>
           ))}
           <p style={{
             fontFamily: "'JetBrains Mono', monospace", fontSize: 10,
