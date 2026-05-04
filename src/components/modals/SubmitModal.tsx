@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { CONTACT_EMAIL } from '../../data/nf-constants';
+import axios from 'axios';
 
 const ArrowIcon = () => (
   <svg width={14} height={14} viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
     <path d="M2 7h10M8 3l4 4-4 4" />
+  </svg>
+);
+
+const SpinnerIcon = () => (
+  <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+    style={{ animation: 'spin 0.8s linear infinite' }}>
+    <circle cx="12" cy="12" r="10" strokeOpacity="0.25" />
+    <path d="M12 2a10 10 0 0 1 10 10" />
+    <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
   </svg>
 );
 
@@ -42,11 +51,20 @@ const FIELDS: { key: FormKey; label: string; placeholder: string }[] = [
   { key: 'email', label: 'Your email', placeholder: 'you@email.com' },
 ];
 
-export const SubmitModal: React.FC<Props> = ({ open, onClose }) => {
-  const [form, setForm] = useState({ name: '', project: '', url: '', email: '', message: '' });
-  const [sent, setSent] = useState(false);
+const EMPTY_FORM = { name: '', project: '', url: '', email: '', message: '' };
 
-  useEffect(() => { if (!open) setSent(false); }, [open]);
+export const SubmitModal: React.FC<Props> = ({ open, onClose }) => {
+  const [form, setForm] = useState(EMPTY_FORM);
+  const [status, setStatus] = useState<'idle' | 'loading' | 'sent' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  useEffect(() => {
+    if (!open) {
+      setStatus('idle');
+      setForm(EMPTY_FORM);
+      setErrorMsg('');
+    }
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -59,13 +77,20 @@ export const SubmitModal: React.FC<Props> = ({ open, onClose }) => {
     };
   }, [open, onClose]);
 
-  const handleSubmit = () => {
-    const subject = encodeURIComponent(`[NorthForge] Project Submission: ${form.project}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nProject: ${form.project}\nURL: ${form.url}\nEmail: ${form.email}\n\n${form.message}`
-    );
-    window.open(`mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`, '_blank');
-    setSent(true);
+  const handleSubmit = async () => {
+    if (!form.name || !form.project || !form.email) return;
+    setStatus('loading');
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:8000';
+      await axios.post(`${apiUrl}/api/send-submission`, form);
+      setStatus('sent');
+    } catch (e: unknown) {
+      const msg = axios.isAxiosError(e)
+        ? (e.response?.data?.detail ?? e.message)
+        : 'Unexpected error';
+      setErrorMsg(msg);
+      setStatus('error');
+    }
   };
 
   if (!open) return null;
@@ -103,7 +128,8 @@ export const SubmitModal: React.FC<Props> = ({ open, onClose }) => {
           }}
         >✕</button>
 
-        {sent ? (
+        {/* SUCCESS */}
+        {status === 'sent' && (
           <div style={{ textAlign: 'center', padding: '12px 0' }}>
             <div style={{
               width: 64, height: 64, borderRadius: '50%',
@@ -113,18 +139,20 @@ export const SubmitModal: React.FC<Props> = ({ open, onClose }) => {
               margin: '0 auto 22px', color: '#34d399', fontSize: 26,
             }}>✓</div>
             <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 24, fontWeight: 700, color: '#f0f4ff', marginBottom: 12 }}>
-              Email client opened
+              Submission sent!
             </h2>
             <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 15, color: '#94a3b8', lineHeight: 1.7 }}>
-              Your submission is ready to send to{' '}
-              <span style={{ color: '#67e8f9' }}>{CONTACT_EMAIL}</span>.<br />
-              We'll review it and get back to you.
+              We received your submission for <span style={{ color: '#67e8f9' }}>{form.project}</span>.<br />
+              We'll review it and get back to you at <span style={{ color: '#67e8f9' }}>{form.email}</span>.
             </p>
             <button onClick={onClose} style={{ ...CYAN_BTN, width: 'auto', marginTop: 26, padding: '10px 22px', fontSize: 11 }}>
               Close
             </button>
           </div>
-        ) : (
+        )}
+
+        {/* FORM */}
+        {status !== 'sent' && (
           <>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
               <img src="/logo-mark.png" alt="NorthForge" style={{ width: 26, height: 26 }} />
@@ -149,8 +177,9 @@ export const SubmitModal: React.FC<Props> = ({ open, onClose }) => {
                     type="text"
                     placeholder={placeholder}
                     value={form[key]}
+                    disabled={status === 'loading'}
                     onChange={(e) => setForm(f => ({ ...f, [key]: e.target.value }))}
-                    style={INPUT}
+                    style={{ ...INPUT, opacity: status === 'loading' ? 0.6 : 1 }}
                   />
                 </div>
               ))}
@@ -161,13 +190,36 @@ export const SubmitModal: React.FC<Props> = ({ open, onClose }) => {
                 <textarea
                   placeholder="What does your product do? Who is it for?"
                   value={form.message}
+                  disabled={status === 'loading'}
                   onChange={(e) => setForm(f => ({ ...f, message: e.target.value }))}
                   rows={4}
-                  style={{ ...INPUT, resize: 'vertical', fontFamily: "'Space Grotesk', sans-serif" }}
+                  style={{ ...INPUT, resize: 'vertical', fontFamily: "'Space Grotesk', sans-serif", opacity: status === 'loading' ? 0.6 : 1 }}
                 />
               </div>
-              <button onClick={handleSubmit} style={{ ...CYAN_BTN, marginTop: 8 }}>
-                Send submission <ArrowIcon />
+
+              {/* ERROR */}
+              {status === 'error' && (
+                <div style={{
+                  padding: '12px 16px', borderRadius: 8,
+                  background: 'rgba(239,68,68,0.08)',
+                  border: '1px solid rgba(239,68,68,0.25)',
+                  fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+                  color: '#fca5a5',
+                }}>
+                  ✕ {errorMsg || 'Something went wrong. Please try again.'}
+                </div>
+              )}
+
+              <button
+                onClick={handleSubmit}
+                disabled={status === 'loading'}
+                style={{
+                  ...CYAN_BTN, marginTop: 8,
+                  opacity: status === 'loading' ? 0.7 : 1,
+                  cursor: status === 'loading' ? 'not-allowed' : 'pointer',
+                }}
+              >
+                {status === 'loading' ? <><SpinnerIcon /> Sending…</> : <>Send submission <ArrowIcon /></>}
               </button>
             </div>
           </>
