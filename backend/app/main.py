@@ -13,8 +13,9 @@ app = FastAPI(title="NorthForge Forge-Sim API")
 
 # Setup CORS with a whitelist
 origins = [
-    "http://localhost:5173", # Frontend dev server
-    # TODO: Add production domain here when ready
+    "http://localhost:5173",
+    "https://northforgestudios.tech",
+    "https://www.northforgestudios.tech"
 ]
 
 app.add_middleware(
