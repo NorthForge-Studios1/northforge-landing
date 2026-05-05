@@ -1,7 +1,7 @@
 import resend
 import os
 import json
-from firebase_functions import https_fn
+from firebase_functions import https_fn, options
 from firebase_admin import initialize_app
 
 initialize_app()
@@ -13,25 +13,15 @@ ALLOWED_ORIGINS = [
 ]
 
 
-def _cors_headers(req: https_fn.Request) -> dict:
-    origin = req.headers.get("Origin", "")
-    allow_origin = origin if origin in ALLOWED_ORIGINS else ALLOWED_ORIGINS[0]
-    return {
-        "Access-Control-Allow-Origin": allow_origin,
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
-    }
-
-
-@https_fn.on_request()
+@https_fn.on_request(
+    cors=options.CorsOptions(
+        cors_origins=ALLOWED_ORIGINS,
+        cors_methods=["POST", "GET"],
+    )
+)
 def send_submission(req: https_fn.Request) -> https_fn.Response:
-    headers = _cors_headers(req)
-
-    if req.method == "OPTIONS":
-        return https_fn.Response("", status=204, headers=headers)
-
     if req.method != "POST":
-        return https_fn.Response("Method not allowed", status=405, headers=headers)
+        return https_fn.Response("Method not allowed", status=405)
 
     try:
         data = req.get_json(silent=True) or {}
@@ -96,12 +86,12 @@ def send_submission(req: https_fn.Request) -> https_fn.Response:
         return https_fn.Response(
             json.dumps({"success": True}),
             status=200,
-            headers={**headers, "Content-Type": "application/json"},
+            headers={"Content-Type": "application/json"},
         )
 
     except Exception as e:
         return https_fn.Response(
             json.dumps({"success": False, "error": str(e)}),
             status=500,
-            headers={**headers, "Content-Type": "application/json"},
+            headers={"Content-Type": "application/json"},
         )
