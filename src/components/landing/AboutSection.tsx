@@ -106,7 +106,7 @@ export const AboutSection: React.FC = () => {
               rel="noopener noreferrer"
               style={{ color: '#67e8f9', textDecoration: 'none' }}
             >
-              @NorthForgeOrg
+              @NorthForgeHQ
             </a>
           </p>
         </div>

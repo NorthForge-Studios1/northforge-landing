@@ -1,5 +1,5 @@
 export const CONTACT_EMAIL = 'contacto@northforgestudios.tech';
-export const X_URL = 'https://x.com/NorthForgeOrg';
+export const X_URL = 'https://x.com/NorthForgeHQ';
 export const GITHUB_URL = 'https://github.com/North-Chive';
 
 export interface FeaturedProduct {
