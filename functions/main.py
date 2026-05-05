@@ -6,18 +6,13 @@ from firebase_admin import initialize_app
 
 initialize_app()
 
-ALLOWED_ORIGINS = [
-    "https://northforgestudios.tech",
-    "https://www.northforgestudios.tech",
-    "http://localhost:5173",
-]
-
 
 @https_fn.on_request(
+    secrets=["RESEND_API_KEY"],
     cors=options.CorsOptions(
-        cors_origins=ALLOWED_ORIGINS,
+        cors_origins="*",
         cors_methods=["POST", "GET"],
-    )
+    ),
 )
 def send_submission(req: https_fn.Request) -> https_fn.Response:
     if req.method != "POST":
