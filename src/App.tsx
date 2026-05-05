@@ -28,7 +28,6 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<MainLayout />}>
               <Route index element={<Home />} />
-              <Route path="labs" element={<LabsForgeSim />} />
               <Route path="privacy" element={<PrivacyPolicy />} />
               <Route path="forum" element={<Forum />} />
               <Route path="profile/:id" element={<UserProfile />} />
@@ -46,3 +45,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+ default App;
