@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './providers/AuthProvider';
 import { MainLayout } from './components/layout/MainLayout';
 import Home from './pages/Home';
-import LabsForgeSim from './pages/LabsForgeSim';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import { Forum } from './pages/Forum/Forum';
 import { UserProfile } from './pages/Profile/UserProfile';
