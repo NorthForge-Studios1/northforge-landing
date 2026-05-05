@@ -81,8 +81,10 @@ export const SubmitModal: React.FC<Props> = ({ open, onClose }) => {
     if (!form.name || !form.project || !form.email) return;
     setStatus('loading');
     try {
-      const apiUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:8000';
-      await axios.post(`${apiUrl}/api/send-submission`, form);
+      // TODO: replace with your Firebase project ID after deploy
+      // e.g. https://us-central1-YOUR_PROJECT_ID.cloudfunctions.net/send_submission
+      const apiUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:5001';
+      await axios.post(`${apiUrl}/send_submission`, form);
       setStatus('sent');
     } catch (e: unknown) {
       const msg = axios.isAxiosError(e)
