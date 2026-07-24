@@ -17,6 +17,7 @@ export interface OwnProduct {
   tag: string;
   status: 'live' | 'soon';
   url?: string;
+  pitch?: string;
   accent: string;
 }
 
@@ -37,7 +38,9 @@ export const PRODUCTS: OwnProduct[] = [
     description:
       'AI-powered WhatsApp automation for businesses. Connect WhatsApp in minutes and let Airi handle service, sales, and support — 24/7.',
     tag: 'SaaS · WhatsApp · AI',
-    status: 'soon',
+    status: 'live',
+    url: 'https://washop.duckdns.org/presentacion',
+    pitch: 'Te comparto algo que le puede servir un montón a tu negocio.',
     accent: '#3b82f6',
   },
 ];

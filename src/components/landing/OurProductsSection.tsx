@@ -55,6 +55,23 @@ function OwnProductCard({ p, index }: { p: OwnProduct; index: number }) {
         lineHeight: 1.7, color: '#94a3b8', flexGrow: 1,
       }}>{p.description}</p>
 
+      {isLive && p.pitch && (
+        <div style={{
+          background: `linear-gradient(135deg, rgba(59,130,246,0.10), rgba(59,130,246,0.04))`,
+          border: `1px solid rgba(59,130,246,0.22)`,
+          borderRadius: 8, padding: '10px 14px',
+          display: 'flex', alignItems: 'center', gap: 10,
+        }}>
+          <span style={{ fontSize: 14 }}>💡</span>
+          <span style={{
+            fontFamily: "'Space Grotesk', sans-serif", fontSize: 13,
+            color: '#93c5fd', lineHeight: 1.5, fontStyle: 'italic',
+          }}>
+            {p.pitch}
+          </span>
+        </div>
+      )}
+
       {isLive && p.url ? (
         <a
           href={p.url}
