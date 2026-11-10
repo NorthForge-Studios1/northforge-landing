@@ -9,7 +9,7 @@ NorthForge es ahora solo la página de presentación del estudio: **vendemos el 
 
 - Página: `src/pages/Home.tsx` · textos ES/EN: `src/nf/copy.ts` · estilos: `src/nf/nf.css`
 - Rutas: `/` y `/privacy` (el foro, perfiles y panel quedaron sin usar; sus archivos siguen en el repo).
-- Fuentes propias en `public/fonts/` (Imbue y Albert Sans). Capturas reales de MyWorld en `public/work/`.
+- Fuentes propias en `public/fonts/` (Bricolage Grotesque). La imagen de la marca es el razorbill (`public/logo-mark.png`). Capturas reales de MyWorld en `public/work/`.
 
 ## Our Products
 

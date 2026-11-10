@@ -1,176 +1,262 @@
-/* Nov 2026: NorthForge. Dirección «el nombre como monumento» (tasteskill): el nombre ocupa el ancho,
-   todo lo demás es pequeño y tranquilo. Colores de la forja: ceniza, carbón y una brasa. */
+/* Nov 2026 (rediseño 2): NorthForge por capítulos de color tomados del razorbill:
+   la noche de su cuerpo, el cian de su borde y el blanco de sus franjas. Una sola letra (Bricolage Grotesque). */
+@font-face { font-family: 'Bricolage Grotesque'; src: url(/fonts/bricolage-grotesque-latin-400-normal.woff2) format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Bricolage Grotesque'; src: url(/fonts/bricolage-grotesque-latin-500-normal.woff2) format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Bricolage Grotesque'; src: url(/fonts/bricolage-grotesque-latin-600-normal.woff2) format('woff2'); font-weight: 600; font-display: swap; }
+
 :root {
-  --bg: #e2dccf;        /* ceniza */
-  --surface: #d6cfbf;
-  --ink: #1d1b18;       /* carbón */
-  --muted: #57534a;
-  --accent: #b2441b;    /* brasa: solo la acción principal */
-  --accent-ink: #ffffff;
-  --field: #1d1b18;     --field-ink: #e2dccf;  --field-muted: #a59f92;
-  --step-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --abyss: #0b1320;   /* el cuerpo del ave */
+  --deep: #10243b;
+  --cyan: #45c9ee;    /* el borde del ave */
+  --ice: #e9f3f7;
+  --white: #ffffff;
+  --sky: #b6e8f7;
+  --soft-on-dark: #a8bccc;
+  --soft-on-light: #3c4d5e;
+  --step-small: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
   --step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
   --step-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
-  --step-head: clamp(2rem, 1.3rem + 3.2vw, 4rem);
-  --m: clamp(16px, 1.6vw, 24px);
-  --display: 'Imbue', 'Times New Roman', serif;
-  --text: 'Albert Sans', system-ui, sans-serif;
-  color-scheme: light;
+  --step-head: clamp(2.25rem, 1.4rem + 3.4vw, 4.25rem);
+  --step-display: clamp(3.25rem, 1rem + 6vw, 7.5rem);
+  --m: clamp(16px, 3vw, 44px);
+  --r: 6px;
+  --font: 'Bricolage Grotesque', system-ui, sans-serif;
+  color-scheme: dark;
 }
-.nf { background: var(--bg); color: var(--ink); font-family: var(--text); font-size: var(--step-body); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+.nf button, .nf a { touch-action: manipulation; -webkit-tap-highlight-color: rgba(69, 201, 238, .25); }
+.nf-strip:hover { animation-play-state: paused; }
+.nf { font-family: var(--font); font-size: var(--step-body); line-height: 1.5; color: var(--abyss); background: var(--abyss); -webkit-font-smoothing: antialiased; }
 .nf *, .nf *::before, .nf *::after { box-sizing: border-box; }
-.nf a { color: inherit; }
-.nf :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-.nf h1, .nf h2, .nf h3 { margin: 0; font-weight: 400; text-wrap: balance; }
-.nf p { margin: 0; text-wrap: pretty; }
-.nf-skip { position: absolute; left: -9999px; top: 8px; background: var(--ink); color: var(--bg); padding: 10px 14px; z-index: 50; }
+:where(.nf) a { color: inherit; }
+:where(.nf) h1, :where(.nf) h2, :where(.nf) h3 { margin: 0; font-weight: 600; letter-spacing: -0.04em; line-height: .92; text-wrap: balance; }
+:where(.nf) p { margin: 0; text-wrap: pretty; }
+.nf :focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
+.nf-on-cyan :focus-visible { outline-color: var(--abyss); }
+.nf-skip { position: absolute; left: -9999px; top: 8px; background: var(--white); color: var(--abyss); padding: 10px 14px; z-index: 50; }
 .nf-skip:focus { left: 8px; }
 .nf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-/* ── Hero ── */
-.nf-hero { position: relative; min-height: 100svh; padding: var(--m); display: grid; grid-template-rows: auto 1fr auto; }
-.nf-corners { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
-.nf-lead { max-width: 36ch; font-size: var(--step-lead); line-height: 1.3; }
-.nf-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 16px; min-height: 44px; padding: 0 20px; background: var(--ink); color: var(--bg) !important; text-decoration: none; font-size: var(--step-small); font-weight: 500; transition: background .2s, transform .2s; }
-.nf-btn:hover { background: var(--accent); }
+.nf-chapter { position: relative; padding: clamp(80px, 9vw, 136px) var(--m); }
+.nf-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: var(--r); background: var(--cyan); color: var(--abyss) !important; font-weight: 500; font-size: var(--step-small); text-decoration: none; transition: background .2s, transform .15s; }
+.nf-btn:hover { background: var(--white); }
 .nf-btn:active { transform: translateY(1px); }
-.nf-nav { display: flex; gap: 22px; font-size: 15px; }
-.nf-nav a, .nf-nav button { white-space: nowrap; text-decoration: none; background: none; border: 0; padding: 4px 0; font: inherit; color: var(--ink); cursor: pointer; border-bottom: 1px solid transparent; }
-.nf-nav a:hover, .nf-nav button:hover { border-bottom-color: currentColor; }
-.nf-name { align-self: center; width: 100%; }
-.nf-name svg { display: block; width: 100%; height: auto; overflow: visible; }
-.nf-name text { font-family: var(--display); fill: var(--ink); }
-.nf-bottom { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; font-size: 16px; color: var(--muted); }
-.nf-bottom .nf-links { display: flex; gap: 20px; font-size: 15px; }
-.nf-bottom a { text-decoration: none; }
-.nf-bottom a:hover { color: var(--ink); text-decoration: underline; }
-.nf-hero-shot { display: none; }
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .nf-name svg { animation: nf-sink linear both; animation-timeline: view(); animation-range: exit 0% exit 80%; transform-origin: 50% 50%; }
-    @keyframes nf-sink { to { scale: 0.93; opacity: .55; } }
-  }
+.nf-btn.is-dark { background: var(--abyss); color: var(--white) !important; }
+.nf-btn.is-dark:hover { background: var(--deep); }
+
+/* ── 1. Portada: noche, el ave y dos tintas ── */
+.nf-hero { min-height: 100svh; background: var(--abyss); color: var(--white); padding: 22px var(--m) var(--m); display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: auto 1fr auto; column-gap: 24px; overflow: hidden; }
+.nf-top { grid-column: 1 / -1; grid-row: 1; position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 15px; }
+.nf-brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; letter-spacing: -0.02em; text-decoration: none; }
+.nf-brand img { width: 30px; height: 30px; }
+.nf-top nav { display: flex; align-items: center; gap: 22px; }
+.nf-top nav a, .nf-top nav button { color: var(--white); text-decoration: none; background: none; border: 0; font: inherit; cursor: pointer; padding: 6px 0; border-bottom: 1px solid transparent; white-space: nowrap; }
+.nf-top nav a:not(.nf-btn):hover, .nf-top nav button:hover { border-bottom-color: currentColor; }
+.nf-top nav .nf-btn { min-height: 44px; padding: 0 18px; border-bottom: 0; background: var(--cyan); color: var(--abyss); }
+.nf-top nav .nf-btn:hover { background: var(--white); }
+.nf-statement { position: relative; z-index: 1; grid-column: 1 / span 9; grid-row: 2; align-self: center; font-size: var(--step-display); font-weight: 400; letter-spacing: -0.035em; line-height: .9; padding-top: 4vh; }
+.nf-statement .nf-sr { display: inline; }
+.nf-statement span { display: block; }
+.nf-statement .l1 { color: var(--cyan); }
+.nf-bird { grid-column: 8 / span 5; grid-row: 1 / span 3; align-self: center; justify-self: end; width: min(40vw, 600px); pointer-events: none; }
+.nf-bird img { display: block; width: 100%; height: auto; filter: drop-shadow(0 0 60px rgba(69, 201, 238, .18)); }
+@media (prefers-reduced-motion: no-preference) {
+  .nf-bird img { animation: nf-float 7s ease-in-out infinite; }
+  @keyframes nf-float { 50% { transform: translateY(-14px); } }
 }
+.nf-hero-foot { grid-column: 1 / span 6; grid-row: 3; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
+.nf-hero-foot p { font-size: var(--step-lead); line-height: 1.3; color: var(--soft-on-dark); max-width: 30ch; }
 
-/* ── Secciones ── */
-.nf-section { padding: clamp(88px, 10vw, 140px) var(--m) clamp(80px, 9vw, 120px); }
-.nf-intro-row { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: end; }
-.nf-intro-row h2 { grid-column: 1 / span 6; font-family: var(--display); font-size: clamp(48px, 6.4vw, 104px); line-height: .92; letter-spacing: -0.01em; text-transform: uppercase; }
-.nf-intro-row p { grid-column: 9 / span 4; color: var(--muted); }
-.nf-facts { margin-top: clamp(64px, 8vw, 120px); display: flex; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
-.nf-facts dt { font-family: var(--display); font-size: clamp(30px, 3.2vw, 48px); line-height: 1; text-transform: uppercase; }
-.nf-facts dd { margin: 8px 0 0; font-size: var(--step-small); color: var(--muted); }
+/* ── 2. Intro: tablero de baldosas sobre hielo ── */
+.nf-intro { background: var(--ice); padding: 8px; }
+.nf-board { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: 38svh 38svh; gap: 8px; }
+.nf-tile-a { grid-column: 1 / span 8; grid-row: 1 / span 2; background: var(--cyan); color: var(--abyss); padding: 24px; display: flex; align-items: flex-end; }
+.nf-tile-a h2 { font-size: var(--step-display); line-height: .88; }
+.nf-tile-b { grid-column: 9 / span 4; grid-row: 1; background: var(--abyss); color: var(--white); padding: 24px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
+.nf-tile-b strong { font-weight: 600; font-size: var(--step-head); line-height: .9; letter-spacing: -0.04em; }
+.nf-tile-b span { margin-top: 10px; font-size: var(--step-small); color: var(--soft-on-dark); }
+.nf-tile-c { grid-column: 9 / span 4; grid-row: 2; overflow: hidden; background: var(--abyss); }
+.nf-tile-c img, .nf-tile-c video { width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; display: block; }
+.nf-intro-text { display: grid; grid-template-columns: repeat(12, 1fr); gap: 8px; padding: clamp(48px, 6vw, 96px) 0; }
+.nf-intro-text p { grid-column: 6 / span 7; padding: 0 clamp(16px, 3vw, 40px); font-size: var(--step-lead); line-height: 1.38; color: var(--abyss); }
 
-/* La cosa viva: el mismo pedido, dos respuestas */
-.nf-live { border-top: 1px solid var(--surface); }
+/* ── 3. La cosa viva: el mismo pedido, dos respuestas, sobre cian ── */
+.nf-live { background: var(--cyan); color: var(--abyss); min-height: 90svh; }
 .nf-live-head { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: end; }
-.nf-live-head h2 { grid-column: 1 / span 7; font-size: var(--step-head); line-height: 1.05; }
-.nf-live-head p { grid-column: 9 / span 4; color: var(--muted); }
-.nf-asks { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 10px; }
-.nf-ask { min-height: 44px; padding: 0 18px; border: 1px solid var(--ink); background: transparent; color: var(--ink); font: inherit; font-size: 16px; cursor: pointer; transition: background .2s, color .2s; }
-.nf-ask[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
-.nf-ask:hover { background: var(--surface); }
-.nf-ask[aria-pressed="true"]:hover { background: var(--ink); }
-.nf-answers { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.nf-answer { padding: clamp(20px, 2.4vw, 32px); min-height: 220px; display: flex; flex-direction: column; gap: 14px; }
-.nf-answer h3 { font-size: var(--step-small); font-weight: 500; }
+.nf-live-head h2 { grid-column: 1 / span 6; font-size: var(--step-head); }
+.nf-live-head p { grid-column: 8 / span 5; }
+.nf-ask-line { margin-top: clamp(56px, 7vw, 112px); font-weight: 600; font-size: var(--step-head); letter-spacing: -0.04em; line-height: 1; white-space: nowrap; overflow-x: auto; scrollbar-width: none; }
+.nf-ask-line::-webkit-scrollbar { display: none; }
+.nf-caret { display: inline-block; width: .08em; height: .82em; margin-left: .08em; background: var(--abyss); vertical-align: -.06em; }
+@media (prefers-reduced-motion: no-preference) { .nf-caret { animation: nf-blink 1.1s steps(1) infinite; } @keyframes nf-blink { 50% { opacity: 0; } } }
+.nf-answers { margin-top: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.nf-answer { border-radius: var(--r); padding: clamp(22px, 2.4vw, 34px); min-height: 240px; display: flex; flex-direction: column; gap: 16px; }
+.nf-answer h3 { font-size: var(--step-small); font-weight: 500; letter-spacing: 0; line-height: 1.3; }
 .nf-answer p { font-size: var(--step-lead); line-height: 1.35; }
 .nf-answer .nf-where { margin-top: auto; font-size: var(--step-small); }
-.nf-answer.is-replace { background: var(--surface); color: var(--muted); }
-.nf-answer.is-replace p { text-decoration: line-through; text-decoration-thickness: 1px; text-decoration-color: rgba(29,27,24,.35); }
-.nf-answer.is-nf { background: var(--field); color: var(--field-ink); }
-.nf-answer.is-nf .nf-where { color: var(--field-muted); }
-.nf-answer.is-nf h3::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--accent); margin-right: 10px; vertical-align: 1px; }
+.nf-answer.is-replace { background: var(--ice); color: var(--soft-on-light); }
+.nf-answer.is-replace p { text-decoration: line-through; text-decoration-thickness: 1.5px; text-decoration-color: rgba(11, 19, 32, .4); }
+.nf-answer.is-nf { background: var(--abyss); color: var(--white); }
+.nf-answer.is-nf h3 { color: var(--cyan); }
+.nf-answer.is-nf .nf-where { color: var(--soft-on-dark); }
 @media (prefers-reduced-motion: no-preference) { .nf-answer p { animation: nf-in .45s ease both; } }
 @keyframes nf-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.nf-asks { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+.nf-asks > span { font-size: var(--step-small); margin-right: 6px; }
+.nf-ask { min-height: 44px; padding: 0 16px; border-radius: var(--r); border: 1.5px solid var(--abyss); background: transparent; color: var(--abyss); font: inherit; font-size: 16px; cursor: pointer; transition: background .2s, color .2s; }
+.nf-ask:hover { background: rgba(11, 19, 32, .1); }
+.nf-ask[aria-pressed="true"] { background: var(--abyss); color: var(--white); }
 
-/* Trabajo: muro desigual sobre carbón */
-.nf-work { background: var(--field); color: var(--field-ink); }
-.nf-work-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
-.nf-work-head h2 { font-family: var(--display); font-size: clamp(72px, 11vw, 168px); line-height: .9; text-transform: uppercase; }
-.nf-work-head a { font-size: 15px; color: var(--field-ink); }
-.nf-work-lead { margin-top: 28px; max-width: 58ch; color: var(--field-muted); }
+/* ── 4. Trabajo: muro desigual sobre azul profundo ── */
+.nf-work { background: var(--deep); color: var(--white); }
+.nf-work-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 16px; }
+.nf-work-head h2 { font-size: var(--step-display); line-height: .88; }
+.nf-work-head a { font-size: 15px; white-space: nowrap; }
+.nf-work-lead { margin-top: 32px; max-width: 60ch; color: var(--soft-on-dark); }
 .nf-wall { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 8px; }
-.nf-tile { margin: 0; flex-grow: 1; }
-.nf-tile img { display: block; width: 100%; height: var(--h); object-fit: cover; object-position: top left; }
-.nf-tile figcaption { margin-top: 8px; display: flex; justify-content: space-between; gap: 12px; font-size: var(--step-small); }
-.nf-tile figcaption span:last-child { color: var(--field-muted); white-space: nowrap; }
-.nf-wall:hover .nf-tile img { opacity: .7; transition: opacity .25s; }
-.nf-wall .nf-tile:hover img { opacity: 1; }
-.nf-washop { margin-top: 56px; padding-top: 28px; border-top: 1px solid #3a3731; display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: baseline; }
-.nf-washop h3 { grid-column: 1 / span 4; font-family: var(--display); font-size: clamp(36px, 4vw, 60px); line-height: 1; text-transform: uppercase; }
-.nf-washop p { grid-column: 5 / span 5; color: var(--field-muted); }
-.nf-washop a { grid-column: 11 / span 2; justify-self: end; font-size: 15px; }
+.nf-shot { margin: 0; flex-grow: 1; }
+.nf-shot img { display: block; width: 100%; height: var(--h); object-fit: cover; object-position: top left; border-radius: 2px; }
+.nf-shot figcaption { margin-top: 8px; display: flex; justify-content: space-between; gap: 12px; font-size: var(--step-small); }
+.nf-shot figcaption span:last-child { color: var(--soft-on-dark); white-space: nowrap; }
+.nf-wall:hover .nf-shot img { opacity: .72; transition: opacity .25s; }
+.nf-wall .nf-shot:hover img { opacity: 1; }
+.nf-washop { margin-top: clamp(72px, 8vw, 120px); display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: baseline; }
+.nf-washop h3 { grid-column: 1 / span 4; font-size: var(--step-head); }
+.nf-washop p { grid-column: 5 / span 5; color: var(--soft-on-dark); }
+.nf-washop a { grid-column: 10 / span 3; justify-self: end; font-size: 15px; }
 
-/* Cómo trabajamos: una columna con párrafos que empiezan en negrita */
-.nf-how { padding-left: max(var(--m), 30vw); }
-.nf-how-col { max-width: 580px; }
-.nf-how h2 { font-size: clamp(28px, 2.4vw, 34px); margin-bottom: 48px; }
-.nf-step + .nf-step { margin-top: 72px; }
-.nf-step p { color: var(--muted); line-height: 1.6; }
-.nf-step b { color: var(--ink); font-weight: 500; }
-.nf-step img[src*='estudio-lector'] { object-position: 80% 0; }
-.nf-step img, .nf-step video { display: block; margin-top: 20px; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; background: var(--field); }
+/* ── 5. Cómo trabajamos: acordeón de oscuro a claro ── */
+.nf-how { background: var(--ice); color: var(--abyss); }
+.nf-how-head { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: end; }
+.nf-how-head h2 { grid-column: 1 / span 5; font-size: var(--step-head); }
+.nf-how-head p { grid-column: 7 / span 5; color: var(--soft-on-light); }
+.nf-acc { margin-top: 56px; display: flex; height: 540px; border-radius: var(--r); overflow: hidden; }
+.nf-stage { position: relative; flex: 1 1 0; min-width: 0; transition: flex-grow .45s ease; overflow: hidden; }
+.nf-stage.is-open { flex-grow: 6; }
+.nf-stage > button { position: absolute; inset: 0; width: 100%; border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; text-align: left; }
+.nf-stage.is-open > button { pointer-events: none; }
+.nf-stage-name { position: absolute; left: 22px; bottom: 22px; font-weight: 600; font-size: var(--step-lead); letter-spacing: -0.02em; writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
+.nf-stage-n { position: absolute; left: 22px; top: 22px; font-size: var(--step-small); opacity: .8; }
+.nf-stage.is-open .nf-stage-name, .nf-stage.is-open .nf-stage-n { display: none; }
+.nf-stage-body { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1.15fr; gap: 28px; padding: clamp(24px, 2.6vw, 40px); opacity: 0; visibility: hidden; transition: opacity .3s ease .15s; }
+.nf-stage.is-open .nf-stage-body { opacity: 1; visibility: visible; }
+.nf-stage-body h3 { font-size: var(--step-head); letter-spacing: -0.035em; }
+.nf-stage-body .nf-stage-text { display: flex; flex-direction: column; justify-content: space-between; gap: 14px; min-width: 0; }
+.nf-stage-body p { max-width: 36ch; font-size: var(--step-body); }
+.nf-stage-body img, .nf-stage-body video { width: 100%; height: 100%; object-fit: cover; object-position: top left; border-radius: 4px; min-height: 0; background: var(--abyss); }
+.nf-stage.t1 { background: var(--abyss); color: var(--white); }
+.nf-stage.t2 { background: #133456; color: var(--white); }
+.nf-stage.t3 { background: #1e6995; color: var(--white); }
+.nf-stage.t4 { background: var(--cyan); color: var(--abyss); }
+.nf-stage.t1 p, .nf-stage.t2 p, .nf-stage.t3 p { color: #d3e3ee; }
 
-/* Quiénes */
-.nf-about { border-top: 1px solid var(--surface); display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
-.nf-about h2 { grid-column: 1 / span 5; font-family: var(--display); font-size: clamp(88px, 12vw, 180px); line-height: .85; text-transform: uppercase; }
-.nf-about-body { grid-column: 7 / span 6; align-self: end; }
-.nf-about-body > p { color: var(--muted); max-width: 46ch; }
-.nf-people { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.nf-people h3 { font-size: 18px; font-weight: 500; }
-.nf-people p { font-size: var(--step-small); color: var(--muted); margin-top: 4px; }
-.nf-people a { font-size: var(--step-small); }
+/* ── 6. Quiénes: una historia grande con palabras resaltadas ── */
+.nf-about { background: var(--abyss); color: var(--soft-on-dark); padding-top: clamp(96px, 10vw, 140px); padding-bottom: clamp(96px, 10vw, 140px); }
+.nf-about-text { columns: 2; column-gap: 40px; font-size: var(--step-lead); line-height: 1.22; letter-spacing: -0.01em; }
+.nf-mark { color: var(--abyss); padding: 0 .1em; border-radius: 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.nf-mark.c { background: var(--cyan); }
+.nf-mark.w { background: var(--white); }
+.nf-mark.s { background: var(--sky); }
+.nf-about-cta { display: inline-block; margin-top: .6em; color: var(--abyss); background: var(--cyan); padding: .05em .2em; border-radius: 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; text-decoration: none; }
+.nf-about-cta:hover { background: var(--white); }
+.nf-people { margin-top: 48px; display: flex; flex-wrap: wrap; gap: 12px 32px; font-size: var(--step-small); }
+.nf-people a { color: var(--white); }
 
-/* Contacto en filas grandes */
-.nf-contact { padding: 0; }
-.nf-row { display: flex; align-items: flex-end; min-height: clamp(84px, 10vw, 150px); padding: 0 var(--m) clamp(14px, 1.6vw, 22px); font-family: var(--display); font-size: clamp(36px, 6vw, 88px); line-height: 1; text-transform: uppercase; text-decoration: none; overflow-wrap: anywhere; }
-.nf-row:nth-child(odd) { background: var(--surface); }
-.nf-row:hover { color: var(--accent); }
-.nf-row-hello { justify-content: space-between; background: var(--accent) !important; color: var(--accent-ink) !important; }
-.nf-round { flex: none; display: inline-grid; place-items: center; width: .9em; height: .9em; border-radius: 50%; background: var(--accent-ink); color: var(--accent); font-family: var(--text); font-size: .6em; transition: transform .2s; }
-.nf-row-hello:hover .nf-round { transform: translateX(6px); }
+/* ── 7. Contacto: cian, tira de capturas y tres celdas ── */
+.nf-contact { background: var(--cyan); color: var(--abyss); padding-left: 0; padding-right: 0; overflow: hidden; }
+.nf-strip { display: flex; gap: 8px; width: max-content; }
+.nf-strip img { height: 150px; width: auto; display: block; border-radius: 2px; }
+@media (prefers-reduced-motion: no-preference) {
+  .nf-strip { animation: nf-marquee 60s linear infinite; }
+  @keyframes nf-marquee { to { transform: translateX(-50%); } }
+}
+.nf-contact-body { padding: 72px var(--m) 0; }
+.nf-contact-body h2 { font-size: var(--step-display); }
+.nf-contact-body > p { margin-top: 16px; font-size: var(--step-lead); }
+.nf-cells { margin-top: 40px; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 8px; }
+.nf-cell { min-height: 104px; border-radius: var(--r); background: var(--abyss); color: var(--white); text-decoration: none; padding: 18px 22px; display: flex; flex-direction: column; justify-content: space-between; transition: background .2s; overflow-wrap: anywhere; }
+.nf-cell span:first-child { font-size: var(--step-small); color: var(--soft-on-dark); }
+.nf-cell span:last-child { font-size: var(--step-lead); font-weight: 500; letter-spacing: -0.01em; }
+.nf-cell:hover { background: var(--deep); }
+.nf-cell.is-main { background: var(--white); color: var(--abyss); }
+.nf-cell.is-main span:first-child { color: var(--soft-on-light); }
+.nf-cell.is-main:hover { background: var(--ice); }
 
-/* Pie: el nombre otra vez, en negativo */
-.nf-foot { background: var(--field); color: var(--field-ink); padding: clamp(72px, 9vw, 120px) var(--m) var(--m); }
-.nf-foot-invite { font-size: var(--step-head); line-height: 1.05; max-width: 22ch; }
-.nf-foot-invite span { color: var(--field-muted); }
-.nf-foot .nf-name { margin-top: clamp(48px, 7vw, 96px); }
-.nf-foot .nf-name text { fill: var(--field-ink); }
-.nf-foot-bar { margin-top: 20px; display: flex; justify-content: space-between; gap: 16px; font-size: var(--step-small); color: var(--field-muted); }
-.nf-foot-bar a { color: var(--field-ink); }
+/* ── 8. Pie: el nombre primero ── */
+.nf-foot { background: var(--abyss); color: var(--white); padding: clamp(64px, 8vw, 112px) var(--m) 28px; }
+.nf-foot-name { display: flex; align-items: center; gap: clamp(12px, 2vw, 28px); font-weight: 600; font-size: calc(var(--step-display) * 1.5); letter-spacing: -0.05em; line-height: .9; }
+.nf-foot-name img { width: .78em; height: .78em; }
+.nf-foot-row { margin-top: 72px; display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+.nf-foot-ways { grid-column: 1 / span 6; display: flex; flex-direction: column; gap: 6px; }
+.nf-foot-ways a { color: var(--cyan); font-size: var(--step-lead); letter-spacing: -0.02em; text-decoration: none; overflow-wrap: anywhere; }
+.nf-foot-ways a:hover { text-decoration: underline; }
+.nf-foot-links { grid-column: 8 / span 5; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; align-content: start; font-size: 15px; }
+.nf-foot-links a { text-decoration: none; color: var(--soft-on-dark); padding: 4px 0; }
+.nf-foot-links a:hover { color: var(--white); }
+.nf-foot-legal { margin-top: 88px; display: flex; justify-content: space-between; gap: 16px; font-size: var(--step-small); color: var(--soft-on-dark); }
+.nf-foot-legal a { color: var(--white); }
+.nf-label { font-size: var(--step-small); color: var(--soft-on-dark); margin-bottom: 10px; }
 
 /* Entradas */
 @media (prefers-reduced-motion: no-preference) {
-  .nf-reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .nf-reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
   .nf-reveal.is-in { opacity: 1; transform: none; }
 }
 
 /* ── Tableta ── */
-@media (min-width: 761px) and (max-width: 1100px) {
-  .nf-intro-row h2, .nf-live-head h2 { grid-column: 1 / span 7; }
-  .nf-intro-row p, .nf-live-head p { grid-column: 8 / span 5; }
-  .nf-how { padding-left: max(var(--m), 18vw); }
+@media (max-width: 1100px) and (min-width: 761px) {
+  .nf-statement { grid-column: 1 / span 9; }
+  .nf-bird { grid-column: 7 / span 6; grid-row: 3; align-self: end; width: 46vw; }
+  .nf-hero-foot { grid-column: 1 / span 6; align-self: end; }
+  .nf-statement { grid-column: 1 / -1; font-size: 11.2vw; }
+  .nf-intro-text p { grid-column: 3 / span 10; }
+  .nf-live-head h2, .nf-how-head h2 { grid-column: 1 / span 7; }
+  .nf-live-head p, .nf-how-head p { grid-column: 8 / span 5; }
+  .nf-stage-body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .nf-stage-body .nf-stage-text { gap: 16px; }
 }
 
 /* ── Teléfono ── */
 @media (max-width: 760px) {
-  .nf-hero { grid-template-rows: auto auto auto 1fr; min-height: auto; gap: 20px; }
-  .nf-corners { flex-direction: column-reverse; }
-  .nf-nav { align-self: flex-end; gap: 16px; font-size: 14px; }
-  .nf-name { order: -1; margin-top: 8vh; }
-  .nf-lead { font-size: 17px; }
-  .nf-btn { width: 100%; justify-content: center; }
-  .nf-hero-shot { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: top left; }
-  .nf-bottom { flex-direction: column; gap: 8px; }
-  .nf-intro-row, .nf-live-head, .nf-washop, .nf-about { grid-template-columns: 1fr; }
-  .nf-intro-row > *, .nf-live-head > *, .nf-washop > *, .nf-about > * { grid-column: auto !important; }
+  .nf-hero { display: flex; flex-direction: column; gap: 28px; min-height: 100svh; }
+  .nf-top nav { gap: 14px; }
+  .nf-top nav .nf-work-link { display: none; }
+  .nf-bird { order: 0; align-self: center; width: 62vw; margin: 12px 0 0; }
+  .nf-statement { font-size: 10.4vw; padding-top: 0; }
+  .nf-hero-foot { margin-top: auto; }
+  .nf-hero-foot .nf-btn { width: 100%; }
+  .nf-hero-foot p { font-size: 18px; }
+  .nf-intro { padding: 6px; }
+  .nf-board { grid-template-columns: 1fr 1fr; grid-template-rows: 46svh auto; gap: 6px; }
+  .nf-tile-a { grid-column: 1 / -1; grid-row: 1; padding: 18px; }
+  .nf-tile-a h2 { font-size: 12vw; }
+  .nf-tile-b { grid-column: 1; grid-row: 2; aspect-ratio: 1; padding: 16px; }
+  .nf-tile-b strong { font-size: 8vw; }
+  .nf-tile-c { grid-column: 2; grid-row: 2; aspect-ratio: 1; }
+  .nf-intro-text { display: block; padding: 40px 0; }
+  .nf-intro-text p { padding: 0 14px; font-size: 19px; }
+  .nf-live-head, .nf-how-head, .nf-washop, .nf-foot-row { grid-template-columns: 1fr; }
+  .nf-live-head > *, .nf-how-head > *, .nf-washop > *, .nf-foot-row > * { grid-column: auto !important; }
   .nf-washop a { justify-self: start; }
-  .nf-facts { display: grid; grid-template-columns: 1fr 1fr; row-gap: 32px; }
+  .nf-ask-line { font-size: 10.5vw; white-space: normal; overflow: visible; line-height: 1.02; }
   .nf-answers { grid-template-columns: 1fr; }
   .nf-answer { min-height: 0; }
-  .nf-how { padding-left: var(--m); }
-  .nf-people { grid-template-columns: 1fr; }
-  .nf-tile { flex-basis: 100% !important; }
-  .nf-tile img { height: 220px; }
+  .nf-shot { flex-basis: 100% !important; }
+  .nf-shot img { height: 220px; }
+  .nf-acc { flex-direction: column; height: auto; }
+  .nf-stage { flex: none; min-height: 64px; }
+  .nf-stage > button { position: relative; inset: auto; height: 64px; display: block; }
+  .nf-stage.is-open > button { display: none; }
+  .nf-stage-name { writing-mode: horizontal-tb; transform: none; left: 18px; bottom: auto; top: 50%; translate: 0 -50%; }
+  .nf-stage-n { left: auto; right: 18px; top: 50%; translate: 0 -50%; }
+  .nf-stage-body { position: relative; inset: auto; display: none; grid-template-columns: 1fr; padding: 20px 18px 22px; gap: 16px; }
+  .nf-stage.is-open .nf-stage-body { display: grid; }
+  .nf-stage-body img, .nf-stage-body video { height: auto; aspect-ratio: 16 / 10; }
+  .nf-about-text { columns: 1; line-height: 1.3; }
+  .nf-strip img { height: 110px; }
+  .nf-cells { grid-template-columns: 1fr; }
+  .nf-cell { min-height: 76px; }
+  .nf-foot-links { grid-column: auto; }
+  .nf-foot-legal { flex-direction: column; gap: 8px; }
 }
+.nf-priv + .nf-priv { margin-top: 28px; }
+.nf-priv b { font-weight: 600; }
