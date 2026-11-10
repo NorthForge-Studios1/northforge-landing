@@ -255,6 +255,7 @@
   .nf-cells { grid-template-columns: 1fr; }
   .nf-cell { min-height: 76px; }
   .nf-foot-links { grid-column: auto; }
+  .nf-foot-name { font-size: 14.5vw; }
   .nf-foot-legal { flex-direction: column; gap: 8px; }
 }
 .nf-priv + .nf-priv { margin-top: 28px; }
