@@ -2,6 +2,15 @@
 
 Official website of [NorthForge Studios](https://northforgestudios.tech) — an AI-focused technology studio. We build our own products and amplify projects from developers and studios around the world.
 
+## Nov 2026 — Nueva dirección
+
+NorthForge es ahora solo la página de presentación del estudio: **vendemos el no reemplazo**
+(software con IA que enseña en vez de hacer el trabajo por ti). Ya no se promocionan proyectos de otros.
+
+- Página: `src/pages/Home.tsx` · textos ES/EN: `src/nf/copy.ts` · estilos: `src/nf/nf.css`
+- Rutas: `/` y `/privacy` (el foro, perfiles y panel quedaron sin usar; sus archivos siguen en el repo).
+- Fuentes propias en `public/fonts/` (Imbue y Albert Sans). Capturas reales de MyWorld en `public/work/`.
+
 ## Our Products
 
 - **[MyWorld](https://myworldhistory.site)** — Creative IDE for writers with integrated AI. Live in Beta.

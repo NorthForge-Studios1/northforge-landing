@@ -1,0 +1,176 @@
+/* Nov 2026: NorthForge. Dirección «el nombre como monumento» (tasteskill): el nombre ocupa el ancho,
+   todo lo demás es pequeño y tranquilo. Colores de la forja: ceniza, carbón y una brasa. */
+:root {
+  --bg: #e2dccf;        /* ceniza */
+  --surface: #d6cfbf;
+  --ink: #1d1b18;       /* carbón */
+  --muted: #57534a;
+  --accent: #b2441b;    /* brasa: solo la acción principal */
+  --accent-ink: #ffffff;
+  --field: #1d1b18;     --field-ink: #e2dccf;  --field-muted: #a59f92;
+  --step-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --step-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --step-head: clamp(2rem, 1.3rem + 3.2vw, 4rem);
+  --m: clamp(16px, 1.6vw, 24px);
+  --display: 'Imbue', 'Times New Roman', serif;
+  --text: 'Albert Sans', system-ui, sans-serif;
+  color-scheme: light;
+}
+.nf { background: var(--bg); color: var(--ink); font-family: var(--text); font-size: var(--step-body); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+.nf *, .nf *::before, .nf *::after { box-sizing: border-box; }
+.nf a { color: inherit; }
+.nf :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.nf h1, .nf h2, .nf h3 { margin: 0; font-weight: 400; text-wrap: balance; }
+.nf p { margin: 0; text-wrap: pretty; }
+.nf-skip { position: absolute; left: -9999px; top: 8px; background: var(--ink); color: var(--bg); padding: 10px 14px; z-index: 50; }
+.nf-skip:focus { left: 8px; }
+.nf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ── Hero ── */
+.nf-hero { position: relative; min-height: 100svh; padding: var(--m); display: grid; grid-template-rows: auto 1fr auto; }
+.nf-corners { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
+.nf-lead { max-width: 36ch; font-size: var(--step-lead); line-height: 1.3; }
+.nf-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 16px; min-height: 44px; padding: 0 20px; background: var(--ink); color: var(--bg) !important; text-decoration: none; font-size: var(--step-small); font-weight: 500; transition: background .2s, transform .2s; }
+.nf-btn:hover { background: var(--accent); }
+.nf-btn:active { transform: translateY(1px); }
+.nf-nav { display: flex; gap: 22px; font-size: 15px; }
+.nf-nav a, .nf-nav button { white-space: nowrap; text-decoration: none; background: none; border: 0; padding: 4px 0; font: inherit; color: var(--ink); cursor: pointer; border-bottom: 1px solid transparent; }
+.nf-nav a:hover, .nf-nav button:hover { border-bottom-color: currentColor; }
+.nf-name { align-self: center; width: 100%; }
+.nf-name svg { display: block; width: 100%; height: auto; overflow: visible; }
+.nf-name text { font-family: var(--display); fill: var(--ink); }
+.nf-bottom { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; font-size: 16px; color: var(--muted); }
+.nf-bottom .nf-links { display: flex; gap: 20px; font-size: 15px; }
+.nf-bottom a { text-decoration: none; }
+.nf-bottom a:hover { color: var(--ink); text-decoration: underline; }
+.nf-hero-shot { display: none; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .nf-name svg { animation: nf-sink linear both; animation-timeline: view(); animation-range: exit 0% exit 80%; transform-origin: 50% 50%; }
+    @keyframes nf-sink { to { scale: 0.93; opacity: .55; } }
+  }
+}
+
+/* ── Secciones ── */
+.nf-section { padding: clamp(88px, 10vw, 140px) var(--m) clamp(80px, 9vw, 120px); }
+.nf-intro-row { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: end; }
+.nf-intro-row h2 { grid-column: 1 / span 6; font-family: var(--display); font-size: clamp(48px, 6.4vw, 104px); line-height: .92; letter-spacing: -0.01em; text-transform: uppercase; }
+.nf-intro-row p { grid-column: 9 / span 4; color: var(--muted); }
+.nf-facts { margin-top: clamp(64px, 8vw, 120px); display: flex; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+.nf-facts dt { font-family: var(--display); font-size: clamp(30px, 3.2vw, 48px); line-height: 1; text-transform: uppercase; }
+.nf-facts dd { margin: 8px 0 0; font-size: var(--step-small); color: var(--muted); }
+
+/* La cosa viva: el mismo pedido, dos respuestas */
+.nf-live { border-top: 1px solid var(--surface); }
+.nf-live-head { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: end; }
+.nf-live-head h2 { grid-column: 1 / span 7; font-size: var(--step-head); line-height: 1.05; }
+.nf-live-head p { grid-column: 9 / span 4; color: var(--muted); }
+.nf-asks { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 10px; }
+.nf-ask { min-height: 44px; padding: 0 18px; border: 1px solid var(--ink); background: transparent; color: var(--ink); font: inherit; font-size: 16px; cursor: pointer; transition: background .2s, color .2s; }
+.nf-ask[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.nf-ask:hover { background: var(--surface); }
+.nf-ask[aria-pressed="true"]:hover { background: var(--ink); }
+.nf-answers { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.nf-answer { padding: clamp(20px, 2.4vw, 32px); min-height: 220px; display: flex; flex-direction: column; gap: 14px; }
+.nf-answer h3 { font-size: var(--step-small); font-weight: 500; }
+.nf-answer p { font-size: var(--step-lead); line-height: 1.35; }
+.nf-answer .nf-where { margin-top: auto; font-size: var(--step-small); }
+.nf-answer.is-replace { background: var(--surface); color: var(--muted); }
+.nf-answer.is-replace p { text-decoration: line-through; text-decoration-thickness: 1px; text-decoration-color: rgba(29,27,24,.35); }
+.nf-answer.is-nf { background: var(--field); color: var(--field-ink); }
+.nf-answer.is-nf .nf-where { color: var(--field-muted); }
+.nf-answer.is-nf h3::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--accent); margin-right: 10px; vertical-align: 1px; }
+@media (prefers-reduced-motion: no-preference) { .nf-answer p { animation: nf-in .45s ease both; } }
+@keyframes nf-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* Trabajo: muro desigual sobre carbón */
+.nf-work { background: var(--field); color: var(--field-ink); }
+.nf-work-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.nf-work-head h2 { font-family: var(--display); font-size: clamp(72px, 11vw, 168px); line-height: .9; text-transform: uppercase; }
+.nf-work-head a { font-size: 15px; color: var(--field-ink); }
+.nf-work-lead { margin-top: 28px; max-width: 58ch; color: var(--field-muted); }
+.nf-wall { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 8px; }
+.nf-tile { margin: 0; flex-grow: 1; }
+.nf-tile img { display: block; width: 100%; height: var(--h); object-fit: cover; object-position: top left; }
+.nf-tile figcaption { margin-top: 8px; display: flex; justify-content: space-between; gap: 12px; font-size: var(--step-small); }
+.nf-tile figcaption span:last-child { color: var(--field-muted); white-space: nowrap; }
+.nf-wall:hover .nf-tile img { opacity: .7; transition: opacity .25s; }
+.nf-wall .nf-tile:hover img { opacity: 1; }
+.nf-washop { margin-top: 56px; padding-top: 28px; border-top: 1px solid #3a3731; display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: baseline; }
+.nf-washop h3 { grid-column: 1 / span 4; font-family: var(--display); font-size: clamp(36px, 4vw, 60px); line-height: 1; text-transform: uppercase; }
+.nf-washop p { grid-column: 5 / span 5; color: var(--field-muted); }
+.nf-washop a { grid-column: 11 / span 2; justify-self: end; font-size: 15px; }
+
+/* Cómo trabajamos: una columna con párrafos que empiezan en negrita */
+.nf-how { padding-left: max(var(--m), 30vw); }
+.nf-how-col { max-width: 580px; }
+.nf-how h2 { font-size: clamp(28px, 2.4vw, 34px); margin-bottom: 48px; }
+.nf-step + .nf-step { margin-top: 72px; }
+.nf-step p { color: var(--muted); line-height: 1.6; }
+.nf-step b { color: var(--ink); font-weight: 500; }
+.nf-step img[src*='estudio-lector'] { object-position: 80% 0; }
+.nf-step img, .nf-step video { display: block; margin-top: 20px; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; background: var(--field); }
+
+/* Quiénes */
+.nf-about { border-top: 1px solid var(--surface); display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+.nf-about h2 { grid-column: 1 / span 5; font-family: var(--display); font-size: clamp(88px, 12vw, 180px); line-height: .85; text-transform: uppercase; }
+.nf-about-body { grid-column: 7 / span 6; align-self: end; }
+.nf-about-body > p { color: var(--muted); max-width: 46ch; }
+.nf-people { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.nf-people h3 { font-size: 18px; font-weight: 500; }
+.nf-people p { font-size: var(--step-small); color: var(--muted); margin-top: 4px; }
+.nf-people a { font-size: var(--step-small); }
+
+/* Contacto en filas grandes */
+.nf-contact { padding: 0; }
+.nf-row { display: flex; align-items: flex-end; min-height: clamp(84px, 10vw, 150px); padding: 0 var(--m) clamp(14px, 1.6vw, 22px); font-family: var(--display); font-size: clamp(36px, 6vw, 88px); line-height: 1; text-transform: uppercase; text-decoration: none; overflow-wrap: anywhere; }
+.nf-row:nth-child(odd) { background: var(--surface); }
+.nf-row:hover { color: var(--accent); }
+.nf-row-hello { justify-content: space-between; background: var(--accent) !important; color: var(--accent-ink) !important; }
+.nf-round { flex: none; display: inline-grid; place-items: center; width: .9em; height: .9em; border-radius: 50%; background: var(--accent-ink); color: var(--accent); font-family: var(--text); font-size: .6em; transition: transform .2s; }
+.nf-row-hello:hover .nf-round { transform: translateX(6px); }
+
+/* Pie: el nombre otra vez, en negativo */
+.nf-foot { background: var(--field); color: var(--field-ink); padding: clamp(72px, 9vw, 120px) var(--m) var(--m); }
+.nf-foot-invite { font-size: var(--step-head); line-height: 1.05; max-width: 22ch; }
+.nf-foot-invite span { color: var(--field-muted); }
+.nf-foot .nf-name { margin-top: clamp(48px, 7vw, 96px); }
+.nf-foot .nf-name text { fill: var(--field-ink); }
+.nf-foot-bar { margin-top: 20px; display: flex; justify-content: space-between; gap: 16px; font-size: var(--step-small); color: var(--field-muted); }
+.nf-foot-bar a { color: var(--field-ink); }
+
+/* Entradas */
+@media (prefers-reduced-motion: no-preference) {
+  .nf-reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .nf-reveal.is-in { opacity: 1; transform: none; }
+}
+
+/* ── Tableta ── */
+@media (min-width: 761px) and (max-width: 1100px) {
+  .nf-intro-row h2, .nf-live-head h2 { grid-column: 1 / span 7; }
+  .nf-intro-row p, .nf-live-head p { grid-column: 8 / span 5; }
+  .nf-how { padding-left: max(var(--m), 18vw); }
+}
+
+/* ── Teléfono ── */
+@media (max-width: 760px) {
+  .nf-hero { grid-template-rows: auto auto auto 1fr; min-height: auto; gap: 20px; }
+  .nf-corners { flex-direction: column-reverse; }
+  .nf-nav { align-self: flex-end; gap: 16px; font-size: 14px; }
+  .nf-name { order: -1; margin-top: 8vh; }
+  .nf-lead { font-size: 17px; }
+  .nf-btn { width: 100%; justify-content: center; }
+  .nf-hero-shot { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: top left; }
+  .nf-bottom { flex-direction: column; gap: 8px; }
+  .nf-intro-row, .nf-live-head, .nf-washop, .nf-about { grid-template-columns: 1fr; }
+  .nf-intro-row > *, .nf-live-head > *, .nf-washop > *, .nf-about > * { grid-column: auto !important; }
+  .nf-washop a { justify-self: start; }
+  .nf-facts { display: grid; grid-template-columns: 1fr 1fr; row-gap: 32px; }
+  .nf-answers { grid-template-columns: 1fr; }
+  .nf-answer { min-height: 0; }
+  .nf-how { padding-left: var(--m); }
+  .nf-people { grid-template-columns: 1fr; }
+  .nf-tile { flex-basis: 100% !important; }
+  .nf-tile img { height: 220px; }
+}
